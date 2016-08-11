@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<title>Tiktok.js--written by limlift@dayoo</title>
+<link rel="stylesheet" href="css/demo.css" />
+<link rel="stylesheet" href="css/tiktok.css" />
+<script type="text/javascript" src="http://s2.dayoo.com/jq/1.7.2/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+<header><h1>Tiktok.js</h1></header>
+<content>
+<div class="guide">
+	<div class="g12">
+		<div class="row">
+			<h3>使用引导</h3>
+			<p>1.引入JQuery</p>
+			<pre><code>&lt;script type="text/javascript" src="http://s2.dayoo.com/jq/1.7.2/jquery-1.7.2.min.js"&gt;&lt;/script&gt;</code></pre>
+			<p>要求jQuery 1.7+版本</p>
+			<br>
+			<p>2.引入Tiktok.js插件代码</p>
+			<pre><code>&lt;script type="text/javascript" src="/path/tiktok.js"&gt;&lt;/script&gt;<br>&lt;link rel="stylesheet" href="tiktok.css" /&gt;</code></pre>
+			<br>
+			<p>3.调用Tiktok.js</p>
+			<pre><code>$(element).tiktok();</code></pre>
+		</div>
+		<div class="row">
+			<h3>默认设置</h3>
+			<pre><code>jQuery(element).tiktok({
+	animateSpeed: 400, //动画速度
+	delay: 200, //动画延时
+	themeColor  :'#0082e5',//主颜色十六进制
+	titleColor : '#0082e5',//标题栏颜色十六进制
+	status : 'default',//浮动提示类型：done完成类型，alert警告类型，error错误类型，default默认类型
+	position : null,//提示位置，适用于type为floattip（有上下左右）和poptip(有上中下)
+	type : 'popbox',//popbox、poptext、popload、floattip、poptip提示类型
+	content : {
+		'title':'tip_title',//提示标题
+		'content':'tip_content',//提示内容
+		'picurl':null//提示加载图片
+	},
+	buttonCancel: '取消', //取消按钮文字
+	buttonConfirm: '确定', //确定文字按钮文字
+	headerAlign : 'center',//标题对齐方式
+	contentAlign : 'left',//内容对齐方式
+	ajaxContentUrl: null, //ajax请求地址
+	onConfirm:null,//确认按钮按下后执行函数
+	onCancel:null,//取消按钮按下后执行函数
+	onBeforeShow: null,//显示之前执行函数
+	onShow: null,//显示之时执行函数
+	onHide: null//隐藏之后执行函数
+})</code></pre>
+		</div>
+		<div class="row">
+			<h3>示例</h3>
+		</div>
+		<div class="row">
+			<div class="g6">
+				<h4>上悬浮提示</h4>
+				<div class="white-button"><a href="javascript:void(0);" id="tt-float-up">上悬浮提示</a></div>
+			</div>
+			<div class="g6">
+				<pre><code>$('#tt-float-up').tiktok({
+			position: 'top',
+			type: 'floattip',
+			content : {
+			'content':'向上的提示内容！'
+			}<br>});</code></pre>
+			</div>
+		</div>
+		<div class="row">
+			<div class="g6">
+				<h4>下悬浮提示</h4>
+				<div class="white-button"><a href="javascript:void(0);" id="tt-float-down">下悬浮提示</a></div>
+			</div>
+			<div class="g6">
+				<pre><code>$('#tt-float-down').tiktok({
+			position: 'bottom',
+			type: 'floattip',
+			content : {
+			'content':'向下的提示内容！'
+			}<br>});</code></pre>
+			</div>
+		</div>
+		<div class="row">
+			<div class="g6">
+				<h4>左悬浮提示</h4>
+				<div class="white-button"><a href="javascript:void(0);" id="tt-float-left">左悬浮提示</a></div>
+			</div>
+			<div class="g6">
+				<pre><code>$('#tt-float-left').tiktok({
+			position: 'left',
+			type: 'floattip',
+			content : {
+			'content':'向左的提示内容！'
+			}<br>});</code></pre>
+			</div>
+		</div>
+		<div class="row">
+			<div class="g6">
+				<h4>右悬浮提示</h4>
+				<div class="white-button"><a href="javascript:void(0);" id="tt-float-right">右悬浮提示</a></div>
+			</div>
+			<div class="g6">
+				<pre><code>$('#tt-float-right').tiktok({
+			position: 'right',
+			type: 'floattip',
+			content : {
+			'content':'向右的提示内容！'
+			}<br>});</code></pre>
+			</div>
+		</div>
+		<div class="row">
+			<div class="g6">
+				<h4>顶部浮动提示</h4>
+				<a href="javascript:void(0);" class="button tt-status-error" id="tt-poptip-error" >错误/失败提示</a>
+			</div>
+			<div class="g6">
+				<pre><code>$('#tt-poptip-error').tiktok({
+			type: 'poptip',
+			status:'error',
+			content : {
+			'content':'顶部的提示内容！'
+			}<br>});<br>$('#tt-poptip-error').on('click',function() {
+			$('#tt-poptip-error').tiktok('show');<br>});</code></pre>
+			</div>
+		</div>
+		<div class="row">
+			<div class="g6">
+				<h4>中间浮动提示</h4>
+				<a href="javascript:void(0);" class="button tt-status-done" id="tt-poptip-done">正确/成功提示</a>
+			</div>
+			<div class="g6">
+				<pre><code>$('#tt-poptip-done').tiktok({
+			type: 'poptip',
+			position:'middle',
+			status:'done',
+			content : {
+			'content':'中间的提示内容！'
+			}<br>});<br>$('#tt-poptip-done').on('click',function() {
+			$('#tt-poptip-done').tiktok('show');<br>});</code></pre>
+			</div>
+		</div>
+		<div class="row">
+			<div class="g6">
+				<h4>底部浮动提示</h4>
+				<a href="javascript:void(0);" class="button tt-status-alert" id="tt-poptip-alert">警告提示</a>
+			</div>
+			<div class="g6">
+				<pre><code>$('#tt-poptip-alert').tiktok({
+			type: 'poptip',
+			position:'bottom',
+			status:'alert',
+			content : {
+			'content':'底部的提示内容！'
+			}<br>});<br>$('#tt-poptip-alert').on('click',function() {
+			$('#tt-poptip-alert').tiktok('show');<br>});</code></pre>
+			</div>
+		</div>
+		<div class="row">
+			<div class="g6">
+				<h4>载入提示</h4>
+				<a href="javascript:void(0);" class="button" id="tt-popload">载入提示</a>
+			</div>
+			<div class="g6">
+				<pre><code>$('#tt-popload').tiktok({
+			type: 'popload',
+			content : {
+			'title':'提示标题',
+			'content':'加载中'
+			}<br>});<br>$('#tt-popload').on('click',function() {
+			$('#tt-popload').tiktok('show');<br>});</code></pre>
+			</div>
+		</div>
+		<div class="row">
+			<div class="g6">
+				<h4>文字提示</h4>
+				<a href="javascript:void(0);" class="button" id="tt-poptext">文字提示</a>
+			</div>
+			<div class="g6">
+				<pre><code>$('#tt-poptext').tiktok({
+			type: 'poptext',
+			content : {
+			'title':'提示标题',
+			'content':'短文字提示框'
+			},
+			contentAlign: 'center',
+			headerAlign : 'center',
+			onCancel:function(){
+				alert('你按下了确定按钮，弹框将隐藏')
+			}<br>});<br>$('#tt-poptext').on('click',function() {
+			$('#tt-poptext').tiktok('show');<br>});</code></pre>
+			</div>
+		</div>
+		<div class="row">
+			<div class="g6">
+				<h4>弹出提示</h4>
+				<a href="javascript:void(0);" class="button" id="tt-popbox" data-bool="">弹出提示</a>
+			</div>
+			<div class="g6">
+				<pre><code>$('#tt-popbox').tiktok({
+			type: 'popbox',
+			content : {
+			'title':'提示标题',
+			'content':'长文字提示框'
+			},
+			headerAlign: 'left',
+			onCancel:function(){
+				alert('你按下了取消按钮，弹框将隐藏')
+			},
+			onConfirm:function(){
+				alert('你按下了确定按钮，弹框将隐藏')
+			}<br>});<br>$('#tt-popbox').on('click',function() {
+			$('#tt-popbox').tiktok('show');<br>});</code></pre>
+			</div>
+		</div>
+		<div class="row">
+			<div class="g6">
+				<h4>显示隐藏方法</h4>
+				<div class="white-button"><a href="javascript:void(0);" id="tt-sh">悬浮提示</a><a href="javascript:void(0);" id="tt-showbox" class="click">显示</a><a href="javascript:void(0);" id="tt-hidebox" class="click">隐藏</a><a href="javascript:void(0);" id="tt-delbox" class="click tt-status-error">删除</a></div>
+			</div>
+			<div class="g6">
+				<pre><code>$('#tt-sh').tiktok({
+			type: 'floattip',
+			position:'top',
+			content : {
+			'content':'原始文字提示'
+			}<br>});<br>$('#tt-showbox').on('click',function() {
+		$('#tt-sh').tiktok('show');<br>});<br>$('#tt-hidebox').on('click',function() {
+		$('#tt-sh').tiktok('hide');<br>});<br>$('#tt-delbox').on('click',function() {
+		$('#tt-sh').tiktok('destroy');<br>});</code></pre>
+			</div>
+		</div>
+		<div class="row">
+			<div class="g6">
+				<h4>内容更新方法</h4>
+				<div class="white-button"><a href="javascript:void(0);" id="tt-update" data-bool="">内容更新</a><input type="text" id="tt-updatebox" placeholder="输入更新提示内容"></div>
+			</div>
+			<div class="g6">
+				<pre><code>$('#tt-update').tiktok({
+			type: 'floattip',
+			position:'top',
+			content : {
+			'content':'原始文字提示'
+			}<br>});<br>$('#tt-updatebox').bind('change',function() {
+			$('#tt-update').tiktok('update','content',{content:$('#tt-updatebox').val()});<br>});</code></pre>
+			</div>
+		</div>
+	</div>
+</div>
+</content>
+<footer>written by <a href="https://limlift.github.io" target="_blank">Limlift</a>&nbsp;@dayoo</footer>
+<script type="text/javascript" src="js/tiktok.min.js"></script>
+<script>
+	$(function () {
+		$('content').height(Math.max($('content').height(),document.body.clientHeight-100-40));
+		$('#tt-float-up').tiktok({
+			position: 'top',
+			type: 'floattip',
+			content : {
+			'content':'向上的提示内容！'
+			}
+		});
+		$('#tt-float-down').tiktok({
+			position: 'bottom',
+			type: 'floattip',
+			content : {
+			'content':'向下的提示内容！'
+			}
+		});
+		$('#tt-float-left').tiktok({
+			position: 'left',
+			type: 'floattip',
+			content : {
+			'content':'向左的提示内容！'
+			}
+		});
+		$('#tt-float-right').tiktok({
+			position: 'right',
+			type: 'floattip',
+			content : {
+			'content':'向右的提示内容！'
+			}
+		});
+		$('#tt-poptip-error').tiktok({
+			type: 'poptip',
+			status:'error',
+			content : {
+			'content':'顶部的提示内容！'
+			}
+		});
+		$('#tt-poptip-error').on('click',function() {
+			$('#tt-poptip-error').tiktok('show');
+		});
+		$('#tt-poptip-done').tiktok({
+			type: 'poptip',
+			position:'middle',
+			status:'done',
+			content : {
+			'content':'中间的提示内容！'
+			}
+		});
+		$('#tt-poptip-done').on('click',function() {
+			$('#tt-poptip-done').tiktok('show');
+		});
+		$('#tt-poptip-alert').tiktok({
+			type: 'poptip',
+			position:'bottom',
+			status:'alert',
+			content : {
+			'content':'底部的提示内容！'
+			}
+		});
+		$('#tt-poptip-alert').on('click',function() {
+			$('#tt-poptip-alert').tiktok('show');
+		});
+		$('#tt-popload').tiktok({
+			type: 'popload',
+			content : {
+			'title':'提示标题',
+			'content':'加载中'
+			}
+		});
+		$('#tt-popload').on('click',function() {
+			$('#tt-popload').tiktok('show');
+		});
+		$('#tiktok-pop-loading .tt-bg').live('click',function(){
+			$('#tt-popload').tiktok('hide');
+		});
+		$('#tt-poptext').tiktok({
+			type: 'poptext',
+			content : {
+			'title':'提示标题',
+			'content':'短文字提示框'
+			},
+			contentAlign: 'center',
+			headerAlign : 'center',
+			onCancel:function(){
+				alert('你按下了确定按钮，弹框将隐藏')
+			}
+		});
+		$('#tt-poptext').on('click',function() {
+			$('#tt-poptext').tiktok('show');
+		});
+		$('#tt-popbox').tiktok({
+			type: 'popbox',
+			content : {
+			'title':'提示标题',
+			'content':'长文字提示框'
+			},
+			headerAlign: 'left',
+			onCancel:function(){
+				alert('你按下了取消按钮，弹框将隐藏')
+			},
+			onConfirm:function(){
+				alert('你按下了确定按钮，弹框将隐藏')
+			}
+		});
+		$('#tt-popbox').on('click',function() {
+			$('#tt-popbox').tiktok('show');
+		});
+		$('#tt-sh').tiktok({
+			type: 'floattip',
+			position:'top',
+			content : {
+			'content':'原始文字提示'
+			}
+		});
+		$('#tt-showbox').on('click',function() {
+			$('#tt-sh').tiktok('show');
+		});
+		$('#tt-hidebox').on('click',function() {
+			$('#tt-sh').tiktok('hide');
+		});
+		$('#tt-delbox').on('click',function() {
+			$('#tt-sh').tiktok('destroy');
+		});
+		$('#tt-update').tiktok({
+			type: 'floattip',
+			position:'top',
+			content : {
+			'content':'原始文字提示'
+			}
+		});
+		$('#tt-updatebox').bind('change',function() {
+			$('#tt-update').tiktok('update','content',{content:$('#tt-updatebox').val()});
+		});
+	})
+</script>
+</body>
+</html>
