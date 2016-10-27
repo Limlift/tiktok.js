@@ -42,8 +42,8 @@ jQuery(element).tiktok({
 		'content':'tip_content',//Content of tips
 		'picurl':null//Pic of loaded tips
 	},
-	buttonCancel: '取消', //Text of cancel Button
-	buttonConfirm: '确定', //Text of confirm Button
+	buttonCancel: 'cancel', //Text of cancel Button
+	buttonConfirm: 'ok', //Text of confirm Button
 	headerAlign : 'center',//Align of title
 	contentAlign : 'left',//Align of content
 	ajaxContentUrl: null, //Url of ajax request
