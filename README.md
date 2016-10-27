@@ -38,18 +38,19 @@ jQuery(element).tiktok({
 	position : null,//Position,for floattip type(top/left/right/down) and poptip type(top/middle/bottom)
 	type : 'popbox',//Type of tip(popbox/poptext/popload/floattip/poptip)
 	content : {
-		'title':'tip_title',//Title of tips
-		'content':'tip_content',//Content of tips
+		'title':null,//Title of tips
+		'content':null,//Content of tips
 		'picurl':null//Pic of loaded tips
 	},
-	buttonCancel: 'cancel', //Text of cancel Button
-	buttonConfirm: 'ok', //Text of confirm Button
+	buttonCancel: 'CANCEL', //Text of cancel Button
+	buttonConfirm: 'OK', //Text of confirm Button
 	headerAlign : 'center',//Align of title
 	contentAlign : 'left',//Align of content
 	ajaxContentUrl: null, //Url of ajax request
 	onConfirm:null,//Function to be executed after confirm button is clicked.
 	onCancel:null,//Function to be executed after cancel button is clicked.
 	onBeforeShow: null,//Function to be executed before tiktok is shown.
+    onBeforeHide: null,//Function to be executed before tiktok is hidden.
 	onShow: null,//Function to be executed after tiktok is shown.
 	onHide: null//Function to be executed after tiktok is hidden.
 })
