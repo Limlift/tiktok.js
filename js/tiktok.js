@@ -18,16 +18,16 @@
  ;(function($,window, document, undefined){ 
 	var pluginName = 'tiktok',
 	defaults = {
-		animateSpeed: 400, //动画速度
-		delay: 200, //动画延时
+		animateSpeed: 400, //speed of animation动画速度
+		delay: 200, //delation of animation动画延时
 		themeColor  :'#0082e5',//main color 主颜色十六进制
 		titleColor : '#0082e5',//title color 标题栏颜色十六进制
 		status : 'default',//done,alert,error,default 浮动提示类型：done完成类型，alert警告类型，error错误类型，default默认类型
 		position : 'top',//position of floattip&poptip 提示位置，适用于type为floattip（有上下左右）和poptip(有上中下)
 		type : null,//popbox、poptext、popload、floattip、poptip etc. 提示类型
 		content : {
-			'title':'tip_title',//title of tips 提示标题
-			'content':'tip_content',//content of tips 提示内容
+			'title':null,//title of tips 提示标题
+			'content':null,//content of tips 提示内容
 			'picurl':null//picture of popload 提示加载图片
 		},//write down your text of tips here 
 		buttonCancel: '取消', //text of cancelButton 取消按钮文字
@@ -38,6 +38,7 @@
 		onConfirm:null,//function on confirm-button be clicked
 		onCancel:null,//function on cancel-button be clicked
 		onBeforeShow: null,//function before tip show 显示之前调用的函数
+		onBeforeHide: null,//function before tip hide 隐藏之前调用的函数
 		onShow: null,//function on tip show 显示之时调用的函数
 		onHide: null//function on tip hide 隐藏之后调用的函数
 	}; 
@@ -82,7 +83,7 @@
 			if (!this.tiktok_bubble) {
 				switch(obj.settings.type){
 					case 'floattip':
-						this.tiktok_bubble = $('<div id="tiktok-float" class="tiktok"><p class="tt-'+obj.settings.position+'"></p></div>');
+						this.tiktok_bubble = $('<div id="tiktok-float" class="tiktok"><p></p><div class="tiktok-arrow tiktok-arrow-'+obj.settings.position+'"></div>');
 					break;
 					case 'poptip':
 						this.tiktok_bubble = $('<div id="tiktok-tip" class="tiktok tt-status-'+obj.settings.status+' tiktok-float-'+obj.settings.position+'"><p></p><a href="javascript:void(0);" class="tt-close"></a></div>');
@@ -155,14 +156,18 @@
 				break;
 				case 'poptext': case 'popbox':
 					tiktok_bubble.find('.tt-box-header').css({
-						backgroundColor: obj.settings.themeColor,
+						color: obj.settings.themeColor,
 						textAlign: obj.settings.headerAlign
 					});
 					tiktok_bubble.find('p').css({
 						textAlign: obj.settings.contentAlign
 					});
+					tiktok_bubble.find('.tt-status-default').css({
+						backgroundColor: obj.settings.themeColor,
+						'border': '1px solid '+ obj.settings.themeColor
+					});
 					tiktok_bubble.hide();
-					if (obj.content().title=='') {tiktok_bubble.find('.tt-box-header').remove();}
+					if (obj.content().title==''||obj.content().title==null||obj.content().title==undefined) {tiktok_bubble.find('.tt-box-header').remove();}
 					else{tiktok_bubble.find('.tt-box-header').html(obj.content().title);}
 					tiktok_bubble.find('p').html(obj.content().content);
 					noScroll();
@@ -232,6 +237,9 @@
 			tiktok_bubble = this.tooltip();
 			window.clearTimeout(obj.timeout);
 			obj.timegout = null;
+			if ($.isFunction(obj.settings.onBeforeHide)) {
+				obj.settings.onBeforeHide($(this));
+			}
 			tiktok_bubble.stop(true,true).fadeOut(obj.settings.animateSpeed,function(){
 				$(this).remove();
 				if($.isFunction(obj.settings.onHide) && obj.mode == 'show') {
@@ -312,15 +320,27 @@
 		switch(obj.settings.position){
 			case 'top':
 			tiktok_bubble.css({'left':eleW/2+eleL,'top':eleT-18,'margin-left':eleML-floatW/2,'margin-top':eleMT-floatH});
+			tiktok_bubble.find('.tiktok-arrow').css({
+				borderTopColor: obj.settings.themeColor
+			});
 			break;
 			case 'bottom':
 			tiktok_bubble.css({'left':eleW/2+eleL,'top':eleT+floatH+eleH+18,'margin-left':eleML-floatW/2,'margin-top':eleMT-floatH});
+			tiktok_bubble.find('.tiktok-arrow').css({
+				borderBottomColor: obj.settings.themeColor
+			});
 			break;
 			case 'left':
 			tiktok_bubble.css({'left':eleL-floatW-18+eleML,'top':eleT+floatH,'margin-left':0,'margin-top':eleMT-floatH});
+			tiktok_bubble.find('.tiktok-arrow').css({
+				borderLeftColor: obj.settings.themeColor
+			});
 			break;
 			case 'right':
 			tiktok_bubble.css({'left':eleL+eleW+18+eleML,'top':eleT+floatH,'margin-left':0,'margin-top':eleMT-floatH});
+			tiktok_bubble.find('.tiktok-arrow').css({
+				borderRightColor: obj.settings.themeColor
+			});
 			break;
 			default:break;
 		}
