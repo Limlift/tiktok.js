@@ -28,28 +28,29 @@
 		<div class="row">
 			<h3>默认设置</h3>
 			<pre><code>jQuery(element).tiktok({
-	animateSpeed: 400, //动画速度
-	delay: 200, //动画延时
-	themeColor  :'#0082e5',//主颜色十六进制
-	titleColor : '#0082e5',//标题栏颜色十六进制
-	status : 'default',//浮动提示类型：done完成类型，alert警告类型，error错误类型，default默认类型
-	position : null,//提示位置，适用于type为floattip（有上下左右）和poptip(有上中下)
-	type : 'popbox',//popbox、poptext、popload、floattip、poptip提示类型
+	animateSpeed: 400, //speed of animation动画速度
+	delay: 200, //delation of animation动画延时
+	themeColor  :'#0082e5',//main color 主颜色十六进制
+	titleColor : '#0082e5',//title color 标题栏颜色十六进制
+	status : 'default',//done,alert,error,default 浮动提示类型：done完成类型，alert警告类型，error错误类型，default默认类型
+	position : 'top',//position of floattip&poptip 提示位置，适用于type为floattip（有上下左右）和poptip(有上中下)
+	type : null,//popbox、poptext、popload、floattip、poptip etc. 提示类型
 	content : {
-		'title':'tip_title',//提示标题
-		'content':'tip_content',//提示内容
-		'picurl':null//提示加载图片
-	},
-	buttonCancel: '取消', //取消按钮文字
-	buttonConfirm: '确定', //确定文字按钮文字
-	headerAlign : 'center',//标题对齐方式
-	contentAlign : 'left',//内容对齐方式
-	ajaxContentUrl: null, //ajax请求地址
-	onConfirm:null,//确认按钮按下后执行函数
-	onCancel:null,//取消按钮按下后执行函数
-	onBeforeShow: null,//显示之前执行函数
-	onShow: null,//显示之时执行函数
-	onHide: null//隐藏之后执行函数
+		'title':null,//title of tips 提示标题
+		'content':null,//content of tips 提示内容
+		'picurl':null//picture of popload 提示加载图片
+	},//write down your text of tips here 
+	buttonCancel: '取消', //text of cancelButton 取消按钮文字
+	buttonConfirm: '确定', //text of confirmButton 确定文字按钮文字
+	headerAlign : 'center',//align of header 标题对齐方式
+	contentAlign : 'left',//align of content 内容对齐方式
+	ajaxContentUrl: null, //url of ajax request ajax请求地址
+	onConfirm:null,//function on confirm-button be clicked
+	onCancel:null,//function on cancel-button be clicked
+	onBeforeShow: null,//function before tip show 显示之前调用的函数
+	onBeforeHide: null,//function before tip hide 隐藏之前调用的函数
+	onShow: null,//function on tip show 显示之时调用的函数
+	onHide: null//function on tip hide 隐藏之后调用的函数
 })</code></pre>
 		</div>
 		<div class="row">
@@ -108,6 +109,21 @@
 			type: 'floattip',
 			content : {
 			'content':'向右的提示内容！'
+			}<br>});</code></pre>
+			</div>
+		</div>
+		<div class="row">
+			<div class="g6">
+				<h4>自定义颜色</h4>
+				<div class="white-button"><a href="javascript:void(0);" id="tt-float-color">自定义颜色提示</a></div>
+			</div>
+			<div class="g6">
+				<pre><code>$('#tt-float-color').tiktok({
+			themeColor: '#100964',
+			position: 'top',
+			type: 'floattip',
+			content : {
+			'content':'自定义颜色'
 			}<br>});</code></pre>
 			</div>
 		</div>
@@ -251,7 +267,7 @@
 </div>
 </content>
 <footer>written by <a href="https://limlift.github.io" target="_blank">Limlift</a>&nbsp;@dayoo</footer>
-<script type="text/javascript" src="js/tiktok.min.js"></script>
+<script type="text/javascript" src="js/tiktok.js"></script>
 <script>
 	$(function () {
 		$('content').height(Math.max($('content').height(),document.body.clientHeight-100-40));
@@ -281,6 +297,14 @@
 			type: 'floattip',
 			content : {
 			'content':'向右的提示内容！'
+			}
+		});
+		$('#tt-float-color').tiktok({
+			themeColor: '#100964',
+			position: 'top',
+			type: 'floattip',
+			content : {
+			'content':'自定义颜色'
 			}
 		});
 		$('#tt-poptip-error').tiktok({
@@ -331,7 +355,7 @@
 		$('#tt-poptext').tiktok({
 			type: 'poptext',
 			content : {
-			'title':'提示标题',
+			// 'title':'提示标题',
 			'content':'短文字提示框'
 			},
 			contentAlign: 'center',
@@ -349,7 +373,7 @@
 			'title':'提示标题',
 			'content':'长文字提示框'
 			},
-			headerAlign: 'left',
+			headerAlign: 'center',
 			onCancel:function(){
 				alert('你按下了取消按钮，弹框将隐藏')
 			},
