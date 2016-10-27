@@ -112,6 +112,13 @@ jQuery(element).tiktok({
     $('.tiktok').tiktok('update', 'content', 'new content');
 ```
 
-## License 
+## Bugs.
+<del>1.Custom color : Can't custom color totally with type 'FloatTip'.</del>
+
+2.'PopTip' position offset :
+After the initialtion, the position of 'PopTip' will get 80px offset at first run, but it will be normal after first run without refreshing the webpage.
+
+
+## License.
 
 tiktok.js is licensed undet the MIT license.
